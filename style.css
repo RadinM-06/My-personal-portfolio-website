@@ -816,3 +816,44 @@ main,
 
     color:#9ff4ff;
 }
+@media (max-width: 768px){
+
+    .logo{
+        font-size:4rem;
+    }
+
+    .top-bar{
+        left:15px;
+        right:15px;
+        top:15px;
+    }
+
+    .menu{
+        left:15px;
+    }
+
+    main{
+        width:92%;
+        margin:180px auto 0;
+        padding-bottom:150px;
+    }
+
+    .section{
+        margin-bottom:80px;
+    }
+
+    .section h2{
+        font-size:1.6rem;
+    }
+
+    .clock-box{
+        right:15px;
+        bottom:15px;
+        font-size:.8rem;
+    }
+
+    .back-to-top{
+        right:15px;
+    }
+
+}
