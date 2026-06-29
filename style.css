@@ -572,17 +572,11 @@ main,
 
     font-size:2rem;
 
+    transform:rotate(-12deg);
+
     transition:
-        transform .3s ease;
+        transform .35s ease;
 }
-
-.duck:hover{
-
-    transform:
-        rotate(-8deg)
-        scale(1.08);
-}
-
 .duck-text{
 
     color:#8b949e;
@@ -590,8 +584,27 @@ main,
     font-size:.95rem;
 
     letter-spacing:.04em;
+
+    transition:
+        color .35s ease,
+        transform .35s ease;
 }
 
+/* Hover روی کل بخش */
+
+.duck-easter-egg:hover .duck{
+
+    transform:
+        rotate(0deg)
+        translateY(-2px);
+}
+.duck-easter-egg:hover .duck-text{
+
+    color:#c9d1d9;
+
+    transform:
+        translateX(2px);
+}
 @keyframes duckAppear{
 
     from{
@@ -900,4 +913,87 @@ main,
 
     box-shadow:
         0 0 15px rgba(103,232,249,.15);
+}
+/* =========================
+   THEME TOGGLE
+========================= */
+
+.theme-toggle{
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#c9d1d9;
+
+    transition:
+        color .3s ease,
+        transform .3s ease;
+}
+
+.theme-toggle:hover{
+
+    color:#67e8f9;
+
+    transform:scale(1.08);
+}
+
+/* =========================
+   LIGHT MODE
+========================= */
+
+body.light-mode{
+
+    background:#f8fafc;
+
+    color:#111827;
+}
+
+body.light-mode .card{
+
+    background:#ffffff;
+
+    border-color:#d1d5db;
+}
+
+body.light-mode .menu{
+
+    background:rgba(255,255,255,.9);
+
+    border-color:#d1d5db;
+}
+
+body.light-mode .footer{
+
+    border-color:#d1d5db;
+}
+
+body.light-mode .project-tag{
+
+    background:rgba(103,232,249,.15);
+}
+
+body.light-mode .date-box,
+body.light-mode .clock-box,
+body.light-mode .duck-text,
+body.light-mode .footer-links a{
+
+    color:#4b5563;
+}
+body.light-mode .menu-btn{
+
+    color:#111827;
+}
+
+body.light-mode .menu-btn:hover{
+
+    color:#0891b2;
 }
