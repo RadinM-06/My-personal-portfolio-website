@@ -1,225 +1,343 @@
-// =========================
-// ELEMENTS
-// =========================
-const menuBtn = document.querySelector(".menu-btn");
-const menu = document.querySelector(".menu");
-const glow = document.querySelector(".cursor-glow");
+// ======================================================
+// RADINSUT - MAIN SCRIPT
+// ======================================================
 
-const clockEl = document.getElementById("clock");
-const dateEl = document.getElementById("date");
+document.addEventListener("DOMContentLoaded", () => {
 
-// =========================
-// MENU (SAFE TOGGLE)
-// =========================
-if (menuBtn && menu) {
-    menuBtn.addEventListener("click", () => {
-        menu.classList.toggle("active");
-    });
-}
+    // =====================
+    // ELEMENTS
+    // =====================
 
-// =========================
-// CLOCK + DATE
-// =========================
-function updateTime() {
-    const now = new Date();
+    const menuBtn = document.querySelector(".menu-btn");
+    const menu = document.querySelector(".menu");
 
-    if (clockEl) {
-        clockEl.textContent = now.toLocaleTimeString("en-GB", {
-            hour12: false
+    const progressBar = document.querySelector(".scroll-progress");
+    const glow = document.querySelector(".cursor-glow");
+
+    const clock = document.getElementById("clock");
+    const date = document.getElementById("date");
+
+    const backToTop = document.getElementById("backToTop");
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    // =====================
+    // MENU
+    // =====================
+
+    if (menuBtn && menu) {
+
+        menuBtn.addEventListener("click", () => {
+
+            menu.classList.toggle("active");
+
         });
+
     }
 
-    if (dateEl) {
-        dateEl.textContent = now.toISOString().split("T")[0];
+    // =====================
+    // CLOCK + DATE
+    // =====================
+
+    function updateTime() {
+
+        const now = new Date();
+
+        if (clock) {
+
+            clock.textContent = now.toLocaleTimeString("en-GB", {
+                hour12: false
+            });
+
+        }
+
+        if (date) {
+
+            date.textContent = now.toLocaleDateString("en-GB", {
+
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+
+            });
+
+        }
+
     }
+
+    updateTime();
+
+    setInterval(updateTime, 1000);
+
+    // =====================
+    // CURSOR GLOW
+    // =====================
+
+    if (glow) {
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        let currentX = 0;
+        let currentY = 0;
+
+        window.addEventListener("mousemove", e => {
+
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+        });
+
+        function animateGlow() {
+
+            currentX += (mouseX - currentX) * 0.18;
+            currentY += (mouseY - currentY) * 0.18;
+
+            glow.style.transform =
+                `translate(${currentX - 160}px, ${currentY - 160}px)`;
+
+            requestAnimationFrame(animateGlow);
+
+        }
+
+        animateGlow();
+
+    }
+        // =====================
+    // SCROLL PROGRESS
+    // =====================
+
+    if (progressBar) {
+
+        window.addEventListener("scroll", () => {
+
+            const scrollTop = window.scrollY;
+
+            const docHeight =
+                document.documentElement.scrollHeight -
+                window.innerHeight;
+
+            const percent =
+                (scrollTop / docHeight) * 100;
+
+            progressBar.style.width =
+                percent + "%";
+
+        });
+
+    }
+
+    // =====================
+    // BACK TO TOP
+    // =====================
+
+    if (backToTop) {
+
+        window.addEventListener("scroll", () => {
+
+            if (window.scrollY > 400) {
+
+                backToTop.classList.add("show");
+
+            } else {
+
+                backToTop.classList.remove("show");
+
+            }
+
+        });
+
+        backToTop.addEventListener("click", () => {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        });
+
+    }
+
+   // =====================
+// THEME TOGGLE
+// =====================
+
+if (themeToggle) {
+
+    const sunIcon = `
+        <i data-lucide="sun"></i>
+    `;
+
+    const moonIcon = `
+        <i data-lucide="moon"></i>
+    `;
+
+    function applyTheme(theme) {
+
+        if (theme === "light") {
+
+            document.body.classList.add("light-mode");
+            themeToggle.innerHTML = moonIcon;
+
+        } else {
+
+            document.body.classList.remove("light-mode");
+            themeToggle.innerHTML = sunIcon;
+
+        }
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+    }
+
+    // بارگذاری تم ذخیره شده
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+
+        const newTheme =
+            document.body.classList.contains("light-mode")
+                ? "dark"
+                : "light";
+
+        localStorage.setItem("theme", newTheme);
+
+        applyTheme(newTheme);
+
+    });
+
 }
 
-updateTime();
-setInterval(updateTime, 1000);
+ // =====================
+// LEARNING ACCORDION
+// =====================
 
-// =========================
-// CURSOR GLOW (FIXED ALIGNMENT)
-// =========================
-if (glow) {
+const learningCards = document.querySelectorAll(".learning-card");
 
-    let mouseX = 0;
-    let mouseY = 0;
+learningCards.forEach(card => {
 
-    let currentX = 0;
-    let currentY = 0;
+    card.addEventListener("click", function () {
 
-    // mouse tracking
-    window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    }, { passive: true });
+        const section = this.getAttribute("data-section");
 
-    function animate() {
+        const content = document.getElementById(section);
 
-        // smooth follow (lerp)
-        currentX += (mouseX - currentX) * 0.18;
-        currentY += (mouseY - currentY) * 0.18;
+        if (!content) return;
 
-        // IMPORTANT: we center manually in JS (no CSS transform needed)
-        glow.style.transform =
-            `translate(${currentX - 160}px, ${currentY - 160}px)`;
 
-        requestAnimationFrame(animate);
+        const isOpen = content.classList.contains("show");
+
+
+        // بستن همه
+        document.querySelectorAll(".learning-content")
+        .forEach(item => {
+
+            item.classList.remove("show");
+
+        });
+
+
+        document.querySelectorAll(".learning-card")
+        .forEach(item => {
+
+            item.classList.remove("active");
+
+        });
+
+
+        // باز کردن انتخاب شده
+        if (!isOpen) {
+
+            content.classList.add("show");
+
+            this.classList.add("active");
+
+        }
+
+
+        if(window.lucide){
+
+            lucide.createIcons();
+
+        }
+
+    });
+
+});
+        // =====================
+    // LUCIDE ICONS
+    // =====================
+
+    if (window.lucide) {
+
+        lucide.createIcons();
+
     }
 
-    animate();
+});
+// =====================
+// ABOUT TITLE SCRAMBLE (on hover)
+// =====================
+
+const aboutTitle = document.getElementById("aboutTitle");
+
+if (aboutTitle) {
+
+    const originalText = aboutTitle.textContent;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+
+    let scrambleInterval = null;
+
+    function randomChar() {
+        return chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    function runScramble() {
+
+        if (scrambleInterval) clearInterval(scrambleInterval);
+
+        let reveal = 0;
+        let frame = 0;
+
+        scrambleInterval = setInterval(() => {
+
+            aboutTitle.textContent = originalText
+                .split("")
+                .map((c, i) => {
+
+                    if (c === " ") return " ";
+
+                    return i < reveal ? c : randomChar();
+
+                })
+                .join("");
+
+            frame++;
+
+            if (frame >= 3) {
+                reveal++;
+                frame = 0;
+            }
+
+            if (reveal > originalText.length) {
+
+                clearInterval(scrambleInterval);
+                scrambleInterval = null;
+
+                aboutTitle.textContent = originalText;
+
+            }
+
+        }, 35);
+
+    }
+
+    aboutTitle.addEventListener("mouseenter", runScramble);
+
 }
-console.log("MENU READY");
-// =========================
-// SCROLL PROGRESS BAR
-// =========================
-
-const progressBar =
-    document.querySelector(".scroll-progress");
-
-window.addEventListener("scroll", () => {
-
-    const scrollTop =
-        window.scrollY;
-
-    const docHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-    const percent =
-        (scrollTop / docHeight) * 100;
-
-    if(progressBar){
-        progressBar.style.width =
-            percent + "%";
-    }
-});
-
-// =========================
-// ACTIVE MENU SECTION
-// =========================
-
-const sections =
-    document.querySelectorAll("section[id]");
-
-const navLinks =
-    document.querySelectorAll(".menu a");
-
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(section => {
-
-        const sectionTop =
-            section.offsetTop - 150;
-
-        const sectionHeight =
-            section.offsetHeight;
-
-        if(
-            window.scrollY >= sectionTop &&
-            window.scrollY <
-            sectionTop + sectionHeight
-        ){
-            current = section.id;
-        }
-    });
-
-    navLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-        if(
-            link.getAttribute("href") ===
-            "#" + current
-        ){
-            link.classList.add("active");
-        }
-    });
-
-});
-// =========================
-// BACK TO TOP BUTTON
-// =========================
-
-const backToTop =
-    document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-
-    if(window.scrollY > 500){
-
-        backToTop.classList.add("show");
-
-    }else{
-
-        backToTop.classList.remove("show");
-    }
-});
-
-backToTop.addEventListener("click", () => {
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-    });
-
-});
-/* =========================
-   THEME TOGGLE
-========================= */
-
-const themeToggle = document.getElementById("themeToggle");
-
-const sunIcon = `
-<svg stroke="currentColor" fill="none" stroke-width="2"
-viewBox="0 0 24 24" stroke-linecap="round"
-stroke-linejoin="round" width="20" height="20">
-
-    <circle cx="12" cy="12" r="5"></circle>
-
-    <line x1="12" y1="1" x2="12" y2="3"></line>
-    <line x1="12" y1="21" x2="12" y2="23"></line>
-
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-
-    <line x1="1" y1="12" x2="3" y2="12"></line>
-    <line x1="21" y1="12" x2="23" y2="12"></line>
-
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-
-</svg>
-`;
-
-const moonIcon = `
-<svg stroke="currentColor" fill="none" stroke-width="2"
-viewBox="0 0 24 24" stroke-linecap="round"
-stroke-linejoin="round" width="20" height="20">
-
-    <path d="M21 12.79A9 9 0 1 1 11.21 3
-             7 7 0 0 0 21 12.79z">
-    </path>
-
-</svg>
-`;
-
-themeToggle.addEventListener("click", () => {
-
-    document.body.classList.toggle("light-mode");
-
-    if(document.body.classList.contains("light-mode")){
-
-        themeToggle.innerHTML = moonIcon;
-
-    }else{
-
-        themeToggle.innerHTML = sunIcon;
-
-    }
-
-});
