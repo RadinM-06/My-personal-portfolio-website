@@ -6,34 +6,34 @@
 
 body{
     min-height:100vh;
-
     background:#0d1117;
-
     color:#e6edf3;
-
     font-family:Inter,system-ui,sans-serif;
-
     overflow-x:hidden;
-
     position:relative;
 }
 
+/* =========================
+   LOGO
+========================= */
+
+.logo-wrapper{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+}
+
 .logo{
-
     direction:ltr;
-
     font-size:8rem;
     font-weight:900;
-
     display:flex;
     align-items:flex-end;
-
     cursor:pointer;
     user-select:none;
-
     text-shadow:
-    0 0 15px rgba(255,255,255,.04),
-    0 0 30px rgba(103,232,249,.10);
+        0 0 15px rgba(255,255,255,.04),
+        0 0 30px rgba(103,232,249,.10);
 }
 
 .logo span{
@@ -43,12 +43,9 @@ body{
 /* ADIN */
 .middle{
     display:inline-block;
-
     overflow:hidden;
     white-space:nowrap;
-
     width:2.50em;
-
     transition:
         width .7s cubic-bezier(.16,1,.3,1),
         opacity .5s ease,
@@ -58,21 +55,13 @@ body{
 /* خط فیروزه‌ای بین RADIN و SUT */
 .connector{
     position:relative;
-
     width:.95em;
     height:4px;
-
     margin:0;
-
     bottom:1.15rem;
-
     border-radius:999px;
-
     background:#67e8f9;
-
-    box-shadow:
-        0 0 10px rgba(103,232,249,.25);
-
+    box-shadow:0 0 10px rgba(103,232,249,.25);
     transition:
         width .7s cubic-bezier(.16,1,.3,1),
         opacity .4s ease;
@@ -83,111 +72,100 @@ body{
     position:relative;
 }
 
-/* خط زیر RSUT */
+/* خط زیر SUT */
 .sut::after{
     content:"";
-
     position:absolute;
-
     left:33.5%;
     transform:translateX(-50%);
-
     bottom:-10px;
-
     width:0;
-
     height:4px;
-
     border-radius:999px;
-
     background:#67e8f9;
-
-    box-shadow:
-        0 0 12px rgba(103,232,249,.35);
-
-    transition:
-        width .7s cubic-bezier(.16,1,.3,1);
+    box-shadow:0 0 12px rgba(103,232,249,.35);
+    transition:width .7s cubic-bezier(.16,1,.3,1);
 }
 
 /* Hover */
-
 .logo:hover .middle{
     width:0;
-
     opacity:0;
-
     filter:blur(8px);
 }
 
 .logo:hover .connector{
     width:0;
-
     opacity:0;
 }
 
 .logo:hover .sut::after{
     width:165%;
 }
+
 /* =========================
    TOP BAR
 ========================= */
 
 .top-bar{
-
     position:fixed;
-
     top:30px;
-
     left:30px;
-
     right:30px;
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
-    z-index:1000;
+    z-index:9999;
 }
 
-/* =========================
-   MENU
-========================= */
-
 .menu-btn{
-
     background:none;
-
     border:none;
-
     color:#e6edf3;
-
     font-size:1.8rem;
-
     cursor:pointer;
-
     transition:.3s ease;
+    position:relative;
+    z-index:10000;
 }
 
 .menu-btn:hover{
-
     color:#67e8f9;
-
     transform:scale(1.1);
 }
 
-/* =========================
-   DATE
-========================= */
-
 .date-box{
-
     color:#8b949e;
-
     font-size:.95rem;
-
     letter-spacing:.08em;
+}
+
+.theme-toggle{
+    width:44px;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:none;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    color:#c9d1d9;
+    transition:
+        color .3s ease,
+        transform .3s ease;
+    padding:0;
+}
+
+.theme-toggle svg{
+    width:20px;
+    height:20px;
+    display:block;
+}
+
+.theme-toggle:hover{
+    color:#67e8f9;
+    transform:scale(1.08);
 }
 
 /* =========================
@@ -195,640 +173,488 @@ body{
 ========================= */
 
 .clock-box{
-
     position:fixed;
-
     right:30px;
-
     bottom:30px;
-
     color:#8b949e;
-
     font-size:.95rem;
-
     letter-spacing:.08em;
-
     z-index:1000;
 }
+
 html{
     scroll-behavior:smooth;
 }
 
-/* منو */
+/* =========================
+   MENU
+========================= */
 
 .menu{
-
     position:fixed;
-
     top:80px;
-
     left:30px;
-
     display:flex;
-
     flex-direction:column;
-
     gap:12px;
-
     padding:16px;
-
-    background:
-        rgba(22,27,34,.85);
-
+    background:rgba(22,27,34,.85);
     backdrop-filter:blur(12px);
-
     border:1px solid #30363d;
-
     border-radius:16px;
-
     opacity:0;
-
     pointer-events:none;
-
     transform:translateY(-10px);
-
     transition:.3s ease;
-
     z-index:999;
 }
 
 .menu.active{
-
     opacity:1;
-
     pointer-events:auto;
-
     transform:translateY(0);
 }
 
 .menu a{
-
     text-decoration:none;
-
     color:#8b949e;
-
     transition:.3s;
 }
 
 .menu a:hover{
-
     color:#67e8f9;
 }
+
 .menu a.active{
-
     color:#67e8f9;
-
-    text-shadow:
-        0 0 10px rgba(103,232,249,.35);
+    text-shadow:0 0 10px rgba(103,232,249,.35);
 }
 
-/* سکشن‌ها */
+/* =========================
+   MAIN / SECTIONS
+========================= */
 
 main{
-
     width:min(900px,85%);
-
     margin:300px auto 0;
-
     padding-bottom:300px;
+    position:relative;
+    z-index:1;
 }
 
 .section{
-
     margin-bottom:150px;
 }
 
 .section h2{
-
     font-size:2rem;
-
     margin-bottom:20px;
+    user-select:none;
 }
 
 .card{
-
     background:#161b22;
-
     border:1px solid #30363d;
-
     border-radius:16px;
-
     padding:24px;
-
     transition:
         transform .3s ease,
         border-color .3s ease,
         box-shadow .3s ease;
 }
+
 .card:hover{
-
     transform:translateY(-4px);
-
     border-color:#67e8f9;
-
-    box-shadow:
-        0 0 20px rgba(103,232,249,.10);
+    box-shadow:0 0 20px rgba(103,232,249,.10);
 }
 
 .hero{
-
     padding-top:80px;
-
     padding-bottom:10px;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
+    position:relative;
+    z-index:1;
 }
+
 .about-card{
-
     max-width:700px;
-
     line-height:1.8;
-
     font-size:1.05rem;
 }
 
 .about-card p{
-
     margin-bottom:16px;
 }
 
 .about-card p:last-child{
-
     margin-bottom:0;
 }
+
 /* =========================
    PREMIUM FLOATING AURORA
 ========================= */
 
 body::before,
 body::after{
-
     content:"";
-
     position:fixed;
-
     inset:0;
-
     z-index:-1;
-
     pointer-events:none;
-
     filter:blur(60px);
 }
 
-/* هاله اول */
-
 body::before{
-
     background:
-
-        radial-gradient(
-            circle at 20% 25%,
-            rgba(103,232,249,.12),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 80% 30%,
-            rgba(45,212,191,.08),
-            transparent 35%
-        );
-
-    animation:
-        auroraOne 26s ease-in-out infinite;
+        radial-gradient(circle at 20% 25%, rgba(103,232,249,.12), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(45,212,191,.08), transparent 35%);
+    animation:auroraOne 26s ease-in-out infinite;
 }
 
-/* هاله دوم */
-
 body::after{
-
-    background:
-
-        radial-gradient(
-            circle at 50% 80%,
-            rgba(34,211,238,.08),
-            transparent 35%
-        );
-
-    animation:
-        auroraTwo 34s ease-in-out infinite;
+    background:radial-gradient(circle at 50% 80%, rgba(34,211,238,.08), transparent 35%);
+    animation:auroraTwo 34s ease-in-out infinite;
 }
 
 @keyframes auroraOne{
-
-    0%,100%{
-
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50%{
-
-        transform:
-            translate(-18px,12px)
-            scale(1.06);
-    }
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-18px,12px) scale(1.06); }
 }
 
 @keyframes auroraTwo{
-
-    0%,100%{
-
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50%{
-
-        transform:
-            translate(14px,-10px)
-            scale(1.08);
-    }
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(14px,-10px) scale(1.08); }
 }
+
 /* =========================
    FOOTER
 ========================= */
 
 .footer{
-
     width:100%;
-
     padding:40px 0;
-
     border-top:1px solid #30363d;
-
     text-align:center;
-
     color:#8b949e;
+    position:relative;
+    z-index:1;
 }
 
 .footer-links{
-
     margin-top:12px;
-
     display:flex;
-
     justify-content:center;
-
+    align-items:center;
     gap:24px;
 }
 
 .footer-links a{
-
+    display:flex;
+    align-items:center;
+    gap:8px;
     text-decoration:none;
-
     color:#8b949e;
-
-    transition:.3s;
+    transition:.25s ease;
 }
 
 .footer-links a:hover{
-
     color:#67e8f9;
+    transform:translateY(-2px);
 }
+
+.footer-links svg{
+    width:18px;
+    height:18px;
+    stroke-width:2;
+}
+
 /* =========================
    CURSOR GLOW
 ========================= */
 
 .cursor-glow{
-    position: fixed;
-    width: 320px;
-    height: 320px;
-
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-
-    background: radial-gradient(
+    position:fixed;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+    background:radial-gradient(
         circle,
         rgba(103,232,249,.05) 0%,
         rgba(103,232,249,.03) 40%,
         transparent 75%
     );
-
-    filter: blur(30px);
-}
-.hero,
-main,
-.footer{
-    position:relative;
-    z-index:1;
+    filter:blur(30px);
 }
 
-.top-bar{
-    position:fixed;
-
-    top:30px;
-    left:30px;
-    right:30px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    z-index:9999;
-}
-
-.menu-btn{
-    position:relative;
-    z-index:10000;
-}
 /* =========================
    DUCK EASTER EGG
 ========================= */
 
 .duck-easter-egg{
-
     margin-top:40px;
-
     display:flex;
-
     align-items:center;
-
     gap:12px;
-
     opacity:0;
-
-    transform:
-        translateY(30px);
-
-    animation:
-        duckAppear .9s ease forwards;
-
+    transform:translateY(30px);
+    animation:duckAppear .9s ease forwards;
     animation-timeline:view();
-
-    animation-range:
-        entry 20%
-        cover 30%;
+    animation-range:entry 20% cover 30%;
 }
 
 .duck{
-
     font-size:2rem;
-
     transform:rotate(-12deg);
-
-    transition:
-        transform .35s ease;
+    transition:transform .35s ease;
 }
+
 .duck-text{
-
     color:#8b949e;
-
     font-size:.95rem;
-
     letter-spacing:.04em;
-
     transition:
         color .35s ease,
         transform .35s ease;
 }
 
-/* Hover روی کل بخش */
-
 .duck-easter-egg:hover .duck{
-
-    transform:
-        rotate(0deg)
-        translateY(-2px);
+    transform:rotate(0deg) translateY(-2px);
 }
+
 .duck-easter-egg:hover .duck-text{
-
     color:#c9d1d9;
-
-    transform:
-        translateX(2px);
+    transform:translateX(2px);
 }
+
 @keyframes duckAppear{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(30px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0);
-    }
+    from{ opacity:0; transform:translateY(30px); }
+    to{ opacity:1; transform:translateY(0); }
 }
+
 /* =========================
    PROJECT CARDS
 ========================= */
 
 .projects-grid{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(280px,1fr));
-
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:24px;
 }
 
 .project-card{
-
     min-height:180px;
-
     display:flex;
-
     flex-direction:column;
-
     justify-content:space-between;
 }
 
 .project-card h3{
-
     margin-bottom:12px;
-
     font-size:1.2rem;
 }
 
 .project-card p{
-
     color:#8b949e;
-
     line-height:1.6;
 }
 
 .project-tag{
-
     display:inline-block;
-
-    margin-top:16px;
-
+    margin-top:18px;
+    padding:6px 12px;
+    border-radius:999px;
+    background:rgba(103,232,249,.08);
+    border:1px solid rgba(103,232,249,.2);
     color:#67e8f9;
-
-    font-size:.9rem;
+    font-size:.85rem;
 }
 
 .project-link{
-
     display:inline-block;
-
     margin-top:16px;
-
     text-decoration:none;
-
     color:#67e8f9;
-
+    font-weight:600;
     transition:.3s ease;
 }
 
 .project-link:hover{
-
-    transform:translateX(5px);
-}
-/* =========================
-   PROJECT GRID
-========================= */
-
-.projects-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(260px,1fr));
-
-    gap:24px;
+    transform:translateX(4px);
+    color:#9ff4ff;
 }
 
-.project-card{
-
-    min-height:180px;
-}
-
-.project-tag{
-
-    display:inline-block;
-
-    margin-top:18px;
-
-    padding:6px 12px;
-
-    border-radius:999px;
-
-    background:rgba(103,232,249,.08);
-
-    border:1px solid rgba(103,232,249,.2);
-
-    color:#67e8f9;
-
-    font-size:.85rem;
-}
 /* =========================
    SCROLL PROGRESS BAR
 ========================= */
 
 .scroll-progress{
-
     position:fixed;
-
     top:0;
     left:0;
-
     width:0%;
-
     height:3px;
-
     background:#67e8f9;
-
-    box-shadow:
-        0 0 10px rgba(103,232,249,.6);
-
+    box-shadow:0 0 10px rgba(103,232,249,.6);
     z-index:9999;
 }
+
 /* =========================
    BACK TO TOP
 ========================= */
 
 .back-to-top{
-
     position:fixed;
-
     right:30px;
-
     bottom:90px;
-
     width:48px;
-
     height:48px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#161b22;
-
-    color:#67e8f9;
-
-    font-size:1.3rem;
-
-    cursor:pointer;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transform:translateY(20px);
-
-    transition:.3s ease;
-
     border:1px solid #30363d;
-
+    border-radius:50%;
+    background:#161b22;
+    color:#67e8f9;
+    font-size:1.3rem;
+    cursor:pointer;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(20px);
+    transition:.3s ease;
     z-index:1000;
 }
 
 .back-to-top:hover{
-
     transform:translateY(0) scale(1.08);
-
     border-color:#67e8f9;
-
-    box-shadow:
-        0 0 15px rgba(103,232,249,.2);
+    box-shadow:0 0 15px rgba(103,232,249,.2);
 }
 
 .back-to-top.show{
-
     opacity:1;
-
     pointer-events:auto;
-
     transform:translateY(0);
 }
-.project-link{
 
-    display:inline-block;
+/* =========================
+   LIGHT MODE
+========================= */
 
-    margin-top:16px;
+body.light-mode{
+    background:#f8fafc;
+    color:#111827;
+}
 
-    text-decoration:none;
+body.light-mode .card{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
 
-    color:#67e8f9;
+body.light-mode .menu{
+    background:rgba(255,255,255,.9);
+    border-color:#d1d5db;
+}
 
-    font-weight:600;
+body.light-mode .footer{
+    border-color:#d1d5db;
+}
 
+body.light-mode .project-tag{
+    background:rgba(103,232,249,.15);
+}
+
+body.light-mode .date-box,
+body.light-mode .clock-box,
+body.light-mode .duck-text,
+body.light-mode .footer-links a{
+    color:#4b5563;
+}
+
+body.light-mode .menu-btn{
+    color:#111827;
+}
+
+body.light-mode .menu-btn:hover{
+    color:#0891b2;
+}
+
+body.light-mode .learning-card{
+    background:#ffffff;
+    border-color:#d8dee4;
+}
+
+body.light-mode .learning-card h3{
+    color:#111827;
+}
+
+body.light-mode .learning-card p{
+    color:#4b5563;
+}
+
+/* =========================
+   LEARNING GRID
+========================= */
+
+.learning-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+}
+
+.learning-card{
+    background:#161b22;
+    border:1px solid #30363d;
+    border-radius:18px;
+    padding:24px;
+    min-height:170px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    color:#e6edf3;
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.learning-card:hover{
+    transform:translateY(-4px);
+    border-color:#67e8f9;
+    box-shadow:0 0 20px rgba(103,232,249,.10);
+}
+
+.learning-card h3{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:1.2rem;
+    margin-bottom:10px;
+}
+
+.learning-card h3 svg{
+    width:20px;
+    height:20px;
+    color:#6ea8ff;
+    stroke-width:2.2;
+    flex-shrink:0;
     transition:.3s ease;
 }
 
-.project-link:hover{
-
-    transform:translateX(4px);
-
-    color:#9ff4ff;
+.learning-card:hover h3 svg{
+    transform:rotate(-8deg) scale(1.08);
 }
+
+.learning-card p{
+    color:#8b949e;
+    font-size:.95rem;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 768px){
 
     .logo{
@@ -869,131 +695,4 @@ main,
         right:15px;
     }
 
-}
-/* =========================
-   SKILLS
-========================= */
-
-.skills-grid{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:16px;
-
-    margin-top:20px;
-}
-
-.skill-card{
-
-    padding:12px 20px;
-
-    border-radius:14px;
-
-    background:#161b22;
-
-    border:1px solid #30363d;
-
-    color:#e6edf3;
-
-    font-weight:500;
-
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
-}
-
-.skill-card:hover{
-
-    transform:translateY(-3px) scale(1.04);
-
-    border-color:#67e8f9;
-
-    box-shadow:
-        0 0 15px rgba(103,232,249,.15);
-}
-/* =========================
-   THEME TOGGLE
-========================= */
-
-.theme-toggle{
-
-    background:none;
-
-    border:none;
-
-    cursor:pointer;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    color:#c9d1d9;
-
-    transition:
-        color .3s ease,
-        transform .3s ease;
-}
-
-.theme-toggle:hover{
-
-    color:#67e8f9;
-
-    transform:scale(1.08);
-}
-
-/* =========================
-   LIGHT MODE
-========================= */
-
-body.light-mode{
-
-    background:#f8fafc;
-
-    color:#111827;
-}
-
-body.light-mode .card{
-
-    background:#ffffff;
-
-    border-color:#d1d5db;
-}
-
-body.light-mode .menu{
-
-    background:rgba(255,255,255,.9);
-
-    border-color:#d1d5db;
-}
-
-body.light-mode .footer{
-
-    border-color:#d1d5db;
-}
-
-body.light-mode .project-tag{
-
-    background:rgba(103,232,249,.15);
-}
-
-body.light-mode .date-box,
-body.light-mode .clock-box,
-body.light-mode .duck-text,
-body.light-mode .footer-links a{
-
-    color:#4b5563;
-}
-body.light-mode .menu-btn{
-
-    color:#111827;
-}
-
-body.light-mode .menu-btn:hover{
-
-    color:#0891b2;
 }
